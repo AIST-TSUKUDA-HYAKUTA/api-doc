@@ -1,0 +1,153 @@
+swagger: "2.0"
+info:
+  title: M5Server API
+  description: 'ジンバルやkeiganモーター, カメラ, M5Stackを操作するためのAPI仕様書'
+  termsOfService: https://github.com/AIST-TSUKUDA-HYAKUTA
+  contact:
+    email: rusk.ryoy4n@gmail.com # 百田のメールアドレス
+  version: 0.1.0
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: "127.0.0.1:8000"
+tags:
+  - name: 1.coordinates
+    description: send coordinates of gimbal or keigan motor
+  - name: 2.settings
+    description: send setting informations
+  - name: 3.operations
+    description: send operation informations
+schemes:
+  - http
+paths:
+  /coordinates/{component}:
+    get:
+      tags:
+        - 1.coordinates
+      parameters: [
+        {
+          name: component,
+          type: string,
+          enum: [
+            gimbal,
+            keigan
+          ],
+          in: path,
+          required: true
+        },
+        {
+          name: x,
+          type: integer,
+          minimum: 0,
+          maximum: 100,
+          in: query,
+          required: true
+        },
+        {
+          name: y,
+          type: integer,
+          minimum: 0,
+          maximum: 100,
+          in: query,
+          required: true
+        }
+      ]
+      responses:
+       200:
+          description: "仮のレスポンス"
+          schema:
+            type: string
+            example: success
+  /settings:
+    get:
+      tags:
+        - 2.settings
+      parameters: [
+        {
+          name: acceleration,
+          type: integer,
+          minimum: 0,
+          maximum: 100,
+          in: query,
+          required: false
+        },
+        {
+          name: deceleration,
+          type: integer,
+          minimum: 0,
+          maximum: 100,
+          in: query,
+          required: false
+        },
+        {
+          name: gimbal_speed,
+          type: integer,
+          minimum: 0,
+          maximum: 100,
+          in: query,
+          required: false
+        },
+        {
+          name: keigan_speed,
+          type: integer,
+          minimum: 0,
+          maximum: 100,
+          in: query,
+          required: false
+        }
+      ]
+      responses:
+        200:
+          description: "仮のレスポンス"
+          schema:
+            type: string
+            example: success
+  /operations:
+    get:
+      tags:
+        - 3.operations
+      parameters: [
+        {
+          name: gimbal,
+          type: string,
+          enum: [
+            start,
+            stop
+          ],
+          in: query,
+          required: false
+        },
+        {
+          name: record,
+          type: string,
+          enum: [
+            start,
+            stop
+          ],
+          in: query,
+          required: false
+        },
+        {
+          name: m5stack,
+          type: string,
+          enum: [
+            restart
+          ],
+          in: query,
+          required: false
+        },
+        {
+          name: motion,
+          type: integer,
+          minimum: 1,
+          maximum: 5,
+          in: query,
+          required: false
+        }
+      ]
+      responses:
+        200:
+            description: "仮のレスポンス"
+            schema:
+              type: string
+              example: success
