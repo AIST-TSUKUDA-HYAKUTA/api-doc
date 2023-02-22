@@ -1,164 +1,143 @@
-swagger: "2.0"
+openapi: 3.0.1
 info:
   title: M5Server API
-  description: 'ジンバルやkeiganモーター, カメラ, M5Stackを操作するためのAPI仕様書'
+  description: ジンバルやkeiganモーター, カメラ, M5Stackを操作するためのAPI仕様書
   termsOfService: https://github.com/AIST-TSUKUDA-HYAKUTA
   contact:
-    email: rusk.ryoy4n@gmail.com # 百田のメールアドレス
-  version: 0.1.0
+    email: rusk.ryoy4n@gmail.com
   license:
     name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-host: "127.0.0.1:8000"
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.1.0
+servers:
+- url: http://127.0.0.1:8000/
 tags:
-  - name: 1.coordinates
-    description: 座標情報を送信する
-  - name: 2.settings
-    description: 設定情報を送信する
-  - name: 3.operations
-    description: 操作情報を送信する
-schemes:
-  - http
+- name: 1.coordinates
+  description: 座標情報を送信する
+- name: 2.settings
+  description: 設定情報を送信する
+- name: 3.operations
+  description: 操作情報を送信する
 paths:
   /coordinates/{component}:
     get:
       tags:
-        - 1.coordinates
-      parameters: [
-        {
-          name: component,
-          description: ジンバルとkeiganモーターどちらの座標情報か指定,
-          type: string,
-          enum: [
-            gimbal,
-            keigan
-          ],
-          in: path,
-          required: true
-        },
-        {
-          name: x,
-          description: x座標,
-          type: integer,
-          minimum: 0,
-          maximum: 100,
-          in: query,
-          required: true
-        },
-        {
-          name: y,
-          description: y座標,
-          type: integer,
-          minimum: 0,
-          maximum: 100,
-          in: query,
-          required: true
-        }
-      ]
+      - 1.coordinates
+      parameters:
+      - name: component
+        in: path
+        description: ジンバルとkeiganモーターどちらの座標情報か指定
+        required: true
+        schema:
+          type: string
+          enum:
+          - gimbal
+          - keigan
+      - name: x
+        in: query
+        description: x座標
+        required: true
+        schema:
+          maximum: 100
+          minimum: 0
+          type: integer
+      - name: y
+        in: query
+        description: y座標
+        required: true
+        schema:
+          maximum: 100
+          minimum: 0
+          type: integer
       responses:
-       200:
-          description: "仮のレスポンス"
-          schema:
-            type: string
-            example: success
+        200:
+          description: 仮のレスポンス
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: success
   /settings:
     get:
       tags:
-        - 2.settings
-      parameters: [
-        {
-          name: acceleration,
-          description: 発進速度,
-          type: integer,
-          minimum: 0,
-          maximum: 100,
-          in: query,
-          required: false
-        },
-        {
-          name: deceleration,
-          description: 停止速度,
-          type: integer,
-          minimum: 0,
-          maximum: 100,
-          in: query,
-          required: false
-        },
-        {
-          name: gimbal_speed,
-          description: ジンバルスピード,
-          type: integer,
-          minimum: 0,
-          maximum: 100,
-          in: query,
-          required: false
-        },
-        {
-          name: keigan_speed,
-          description: ケイガンスピード,
-          type: integer,
-          minimum: 0,
-          maximum: 100,
-          in: query,
-          required: false
-        }
-      ]
+      - 2.settings
+      parameters:
+      - name: acceleration
+        in: query
+        description: 発進速度
+        schema:
+          maximum: 100
+          minimum: 0
+          type: integer
+      - name: deceleration
+        in: query
+        description: 停止速度
+        schema:
+          maximum: 100
+          minimum: 0
+          type: integer
+      - name: gimbal_speed
+        in: query
+        description: ジンバルスピード
+        schema:
+          maximum: 100
+          minimum: 0
+          type: integer
+      - name: keigan_speed
+        in: query
+        description: ケイガンスピード
+        schema:
+          maximum: 100
+          minimum: 0
+          type: integer
       responses:
         200:
-          description: "仮のレスポンス"
-          schema:
-            type: string
-            example: success
+          description: 仮のレスポンス
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: success
   /operations:
     get:
       tags:
-        - 3.operations
-      parameters: [
-        {
-          name: gimbal,
-          description: ジンバルの起動・停止命令,
-          type: string,
-          enum: [
-            start,
-            stop
-          ],
-          in: query,
-          required: false
-        },
-        {
-          name: record,
-          description: 録画の開始・停止命令,
-          type: string,
-          enum: [
-            start,
-            stop
-          ],
-          in: query,
-          required: false
-        },
-        {
-          name: m5stack,
-          description: M5Stackの再起動命令,
-          type: string,
-          enum: [
-            restart
-          ],
-          in: query,
-          required: false
-        },
-        {
-          name: motion,
-          description: モーション起動命令,
-          type: integer,
-          minimum: 1,
-          maximum: 5,
-          in: query,
-          required: false
-        }
-      ]
+      - 3.operations
+      parameters:
+      - name: gimbal
+        in: query
+        description: ジンバルの起動・停止命令
+        schema:
+          type: string
+          enum:
+          - start
+          - stop
+      - name: record
+        in: query
+        description: 録画の開始・停止命令
+        schema:
+          type: string
+          enum:
+          - start
+          - stop
+      - name: m5stack
+        in: query
+        description: M5Stackの再起動命令
+        schema:
+          type: string
+          enum:
+          - restart
+      - name: motion
+        in: query
+        description: モーション起動命令
+        schema:
+          maximum: 5
+          minimum: 1
+          type: integer
       responses:
         200:
-            description: "仮のレスポンス"
-            schema:
-              type: string
-              example: success
+          description: 仮のレスポンス
+          content:
+            '*/*':
+              schema:
+                type: string
+                example: success
