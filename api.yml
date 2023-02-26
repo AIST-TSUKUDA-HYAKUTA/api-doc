@@ -119,6 +119,13 @@ paths:
           enum:
           - start
           - stop
+      - name: shutter
+        in: query
+        description: 静止画撮影命令
+        schema:
+          type: string
+          enum:
+          - start
       - name: m5stack
         in: query
         description: M5Stackの再起動命令
