@@ -10,7 +10,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 0.1.0
 servers:
-- url: http://127.0.0.1:8000/
+- url: http://127.0.0.1:xxx/
 tags:
 - name: 1.coordinates
   description: 座標情報を送信する
